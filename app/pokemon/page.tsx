@@ -1,13 +1,41 @@
+//https://beta.nextjs.org/docs/data-fetching/fetching
+// import { Image } from "@chakra-ui/react";
 import Link from "next/link";
-import React from "react";
+import { use } from "react";
+import styles from "../../styles/pokemon.module.css";
+import { PokemonRes } from "../types/types";
+// import Image from "next/image";
 
-function PokemonPage() {
+//fetch is currently not supported in Client Components, may trigger multiple re-renders
+// cache: 'force-cache' is the default,to fetch fresh data on every fetch request, use the cache: 'no-store' option
+async function getPokemons() {
+  return (await (
+    await fetch("https://pokeapi.co/api/v2/pokemon/")
+  ).json()) as PokemonRes;
+}
+
+//use is a new React function, accepts a promise, conceptually similar to await
+export default function PokemonPage() {
+  const allPokemons = use(getPokemons());
+  console.log(allPokemons);
+
   return (
     <div>
-      <h1>Pokemon Page</h1>
-      <Link href="/pokemon/ivysaur">About Ivysaur </Link>
+      <h1 className={styles.title}>List of Pokémon</h1>
+      {allPokemons?.results.map((p: { name: string }, i: number) => (
+        <ul key={i}>
+          <Link className={styles.pokemon} href={`/pokemon/${p.name}`}>
+            {/* <Image
+              width={100}
+              height={100}
+              alt={p.name}
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${i}.svg`}
+            /> */}
+            <li>{p.name}</li>
+          </Link>
+        </ul>
+      ))}
+      {/* <Link href="/pokemon/ivysaur">About Ivysaur </Link> */}
     </div>
   );
 }
-
-export default PokemonPage;

@@ -1,3 +1,5 @@
+import styles from "../../styles/pokemon.module.css";
+
 export default function PokemonLayout({
   children,
 }: {
@@ -5,12 +7,9 @@ export default function PokemonLayout({
 }) {
   return (
     <>
-      <aside>
-        <ul>
-          <li>Poke 1</li>
-          <li>Poke 2</li>
-        </ul>
-      </aside>
+      <p className={styles.description}>
+        Bringing the world together through Pokémons that you love!
+      </p>
       {children}
     </>
   );

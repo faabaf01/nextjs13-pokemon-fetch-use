@@ -1,0 +1,16 @@
+a.navlinks {
+    color: rgb(17, 170, 204);
+    padding: 20px 0px;
+    display: inline-block;
+    margin: 0px 20px 0px 20px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  div.align {
+    width: 100%;
+    border: 5px solid rgb(6, 143, 132);
+    padding: 2px;
+    align-items: center;
+    justify-content:flex-end;
+  }
