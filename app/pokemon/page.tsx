@@ -1,5 +1,4 @@
 //https://beta.nextjs.org/docs/data-fetching/fetching
-// import { Image } from "@chakra-ui/react";
 import Link from "next/link";
 import { use } from "react";
 import styles from "../../styles/pokemon.module.css";
@@ -35,7 +34,6 @@ export default function PokemonPage() {
           </Link>
         </ul>
       ))}
-      {/* <Link href="/pokemon/ivysaur">About Ivysaur </Link> */}
     </div>
   );
 }

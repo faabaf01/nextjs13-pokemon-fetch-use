@@ -3,6 +3,7 @@
 //runs at build time, will not be called again during revalidation (ISR)
 
 // can use async/await in layouts and pages, which are Server Components
+// similar to getStaticPaths
 // export async function generateStaticParams() {
 //   return [{ slug: "ivysaur" }];
 // }
