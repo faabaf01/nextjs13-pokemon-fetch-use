@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import styles from "../../styles/navbar.module.css";
 import pokemonLogo from "../../public/pokemonLogo.png";
 
 const routes = [
@@ -19,9 +18,9 @@ export default function Navbar() {
         alt="pokemonLogo"
         src={pokemonLogo}
       />
-      <div className={styles.align}>
+      <div>
         {routes.map((r, i) => (
-          <Link className={styles.navlinks} key={i} href={r.path}>
+          <Link key={i} href={r.path}>
             {r.name}
           </Link>
         ))}

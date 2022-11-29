@@ -9,3 +9,5 @@ export interface PokemonRes {
   previous?: any;
   results: Pokemon[];
 }
+
+

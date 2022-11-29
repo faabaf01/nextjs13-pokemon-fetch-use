@@ -1,7 +1,6 @@
 //https://beta.nextjs.org/docs/data-fetching/fetching
 import Link from "next/link";
 import { use } from "react";
-import styles from "../../styles/pokemon.module.css";
 import { PokemonRes } from "../types/types";
 // import Image from "next/image";
 
@@ -16,23 +15,23 @@ async function getPokemons() {
 //use is a new React function, accepts a promise, conceptually similar to await
 export default function PokemonPage() {
   const allPokemons = use(getPokemons());
-  console.log(allPokemons);
+  // console.log(allPokemons);
 
   return (
     <div>
-      <h1 className={styles.title}>List of Pokémon</h1>
+      <h1>List of Pokémon</h1>
       {allPokemons?.results.map((p: { name: string }, i: number) => (
-        <ul key={i}>
-          <Link className={styles.pokemon} href={`/pokemon/${p.name}`}>
+        <div key={i}>
+          <Link href={`/pokemon/${p.name}`}>
             {/* <Image
               width={100}
               height={100}
               alt={p.name}
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${i}.svg`}
             /> */}
-            <li>{p.name}</li>
+            <p>{p.name}</p>
           </Link>
-        </ul>
+        </div>
       ))}
     </div>
   );
