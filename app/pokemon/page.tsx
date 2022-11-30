@@ -8,35 +8,57 @@ import { PokemonRes } from "../types/types";
 //fetch is currently not supported in Client Components, may trigger multiple re-renders
 // cache: 'force-cache' is the default,to fetch fresh data on every fetch request, use the cache: 'no-store' option
 async function getPokemons() {
-  return (await (
-    await fetch("https://pokeapi.co/api/v2/pokemon/")
-  ).json()) as PokemonRes;
+  const gqlQuery = `query pokemons($limit: Int, $offset: Int) {
+    pokemons(limit: $limit, offset: $offset) {
+      count
+      results {
+        name
+        image
+      }
+    }
+  }`;
+
+  const gqlVariables = {
+    limit: 14,
+    offset: 0,
+  };
+
+  const data = await fetch("https://graphql-pokeapi.graphcdn.app/", {
+    credentials: "omit",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: gqlQuery,
+      variables: gqlVariables,
+    }),
+    method: "POST",
+  });
+
+  const pokes = await data.json();
+  return pokes;
 }
 
 //use is a new React function, accepts a promise, conceptually similar to await
 export default function PokemonPage() {
   const allPokemons = use(getPokemons());
-  // console.log(allPokemons);
+  console.log(allPokemons);
 
   return (
-    <div className="mx-10">
-      <h1>List of Pokémon</h1>
-      <div className="grid gap-8 grid-cols-2 md:grid-cols-5 p-2">
-        {allPokemons?.results.map((p: { name: string }, i: number) => (
-          <div key={i} className="w-36 p-4 bg-lime-400 rounded-xl">
-            <Link href={`/pokemon/${p.name}`}>
-              <Image
-                width={100}
-                height={100}
-                alt={p.name}
-                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${
-                  i + 1
-                }.svg`}
-              />
-              <p className="uppercase font-bold">{p.name}</p>
+    <div className="space-y-6 pt-2 mx-6">
+      <div className="text-center bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-blue-500">
+        <h1>List of Pokémon</h1>
+      </div>
+
+      <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 p-2">
+        {allPokemons?.data?.pokemons?.results.map(
+          (p: { name: string; image: string }, i: number) => (
+            <Link key={i} href={`/pokemon/${p.name}`}>
+              <div className="w-36 h-36 bg-yellow-100 shadow-lg rounded-3xl hover:bg-green-200">
+                <Image width={100} height={100} alt={p.name} src={p.image} />
+                <p className="uppercase font-bold">{p.name}</p>
+              </div>
             </Link>
-          </div>
-        ))}
+          )
+        )}
       </div>
     </div>
   );

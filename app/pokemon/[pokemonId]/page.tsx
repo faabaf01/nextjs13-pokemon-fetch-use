@@ -2,6 +2,7 @@
 //replaces getStaticPaths, doesn't require any context parameters
 //runs at build time, will not be called again during revalidation (ISR)
 import { use } from "react";
+import Image from "next/legacy/image";
 
 // can use async/await in layouts and pages, which are Server Components
 // similar to getStaticPaths
@@ -25,14 +26,17 @@ const fetchData = async (pokemonId: string) => {
   return await res.json();
 };
 
-export async function generateStaticParams({ pokemonId }: any) {
-  // console.log(pokemonId);
-  return [
-    { pokemonId: "bulbasaur" },
-    { pokemonId: "ivysaur" },
-    { pokemonId: "venusaur" },
-  ];
-}
+// export async function generateStaticParams({ pokemonId }: any) {
+//   const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
+//   const data = await res.json();
+
+//   const ids = data.moves.move.map((m))
+//   return [
+//     { pokemonId: "bulbasaur" },
+//     { pokemonId: "ivysaur" },
+//     { pokemonId: "venusaur" },
+//   ];
+// }
 // export async function generateStaticParams(pokemonId: string) {
 //   const pokemons = await fetchData(pokemonId);
 //   const result = pokemons.map((m: { move: { name: string } }) => ({
@@ -46,20 +50,26 @@ function SpecificPokemon({ params }: PageProps) {
   const pokemonMoves: PMoves = use(fetchData(pokemonId));
 
   return (
-    <div className="space-y-6 py-8 ml-10 text-base leading-7">
+    <div className="space-y-6 py-8 mx-4 text-base leading-7">
       {/* {JSON.stringify(pokemonMoves)} */}
-      <h1>{pokemonId}</h1>
-      <div>
-        <h2>Moves:</h2>
-        <div className="grid grid-cols-3 md:grid-cols-6 p-10 bg-lime-300 rounded-2xl">
-          {pokemonMoves.moves.map(
-            (m: { move: { name: string } }, i: number) => (
-              <ul key={i}>
-                <li>{m.move.name}</li>
-              </ul>
-            )
-          )}
-        </div>
+      <h1 className="capitalize">{pokemonId}</h1>
+      <div className="mx-auto h-40 w-40 bg-yellow-100 rounded-full">
+        {/* <Image
+          priority
+          height={160}
+          width={180}
+          alt={pokemonId}
+          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonId}.svg`}
+        /> */}
+      </div>
+
+      <h2>Moves:</h2>
+      <div className="grid grid-cols-3 md:grid-cols-6 p-5 bg-green-100 rounded-2xl">
+        {pokemonMoves.moves.map((m: { move: { name: string } }, i: number) => (
+          <ul key={i}>
+            <li>{m.move.name}</li>
+          </ul>
+        ))}
       </div>
     </div>
   );

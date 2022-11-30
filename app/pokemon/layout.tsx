@@ -4,9 +4,11 @@ export default function PokemonLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <p>Bringing the world together through Pokémons that you love!</p>
+    <div className="text-center">
+      <p className="space-y-6 pt-32 mx-8 font-light text-xl">
+        Bringing the world together through Pokémons that you love!
+      </p>
       {children}
-    </>
+    </div>
   );
 }

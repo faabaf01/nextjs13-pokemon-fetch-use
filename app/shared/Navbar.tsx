@@ -11,19 +11,23 @@ const routes = [
 export default function Navbar() {
   return (
     <>
-      <Image
-        priority
-        width={200}
-        height={80}
-        alt="pokemonLogo"
-        src={pokemonLogo}
-      />
-      <div>
-        {routes.map((r, i) => (
-          <Link key={i} href={r.path}>
-            {r.name}
-          </Link>
-        ))}
+      <div className="fixed w-full h-35 shadow-md z-[100] bg-green-300">
+        <div className="flex justify-between items-center w-full h-full px-3 py-4 2xl:px-16">
+          <Image
+            priority
+            width={200}
+            height={80}
+            alt="pokemonLogo"
+            src={pokemonLogo}
+          />
+          <div className="flex flex-row">
+            {routes.map((r, i) => (
+              <Link key={i} href={r.path}>
+                <div className="px-4 hover:font-bold">{r.name}</div>
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );
