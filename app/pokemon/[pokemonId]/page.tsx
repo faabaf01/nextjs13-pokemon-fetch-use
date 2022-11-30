@@ -22,45 +22,44 @@ const fetchData = async (pokemonId: string) => {
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
-
-  const data = await res.json();
-  return data;
+  return await res.json();
 };
 
-// export async function generateStaticParams() {
-//   // const moves = await fetchData();
-//   // return moves.moves.map((m: { move: { name: string } }) => ({
-//   //   pokemonId: m.move.name.toString(),
-//   // }));
-//   return [
-//     {
-//       pokemonId: "1",
-//     },
-//   ];
-// }
 export async function generateStaticParams({ pokemonId }: any) {
-  console.log(pokemonId);
+  // console.log(pokemonId);
   return [
     { pokemonId: "bulbasaur" },
     { pokemonId: "ivysaur" },
     { pokemonId: "venusaur" },
   ];
 }
+// export async function generateStaticParams(pokemonId: string) {
+//   const pokemons = await fetchData(pokemonId);
+//   const result = pokemons.map((m: { move: { name: string } }) => ({
+//     pokemonId: m.move.name.toString(),
+//   }));
+//   return result;
+// }
 
-async function SpecificPokemon({ params }: PageProps) {
+function SpecificPokemon({ params }: PageProps) {
   const { pokemonId } = params;
-  const pokemonMoves: PMoves = await fetchData(pokemonId);
+  const pokemonMoves: PMoves = use(fetchData(pokemonId));
 
   return (
-    <div>
+    <div className="space-y-6 py-8 ml-10 text-base leading-7">
+      {/* {JSON.stringify(pokemonMoves)} */}
       <h1>{pokemonId}</h1>
       <div>
-        <h3>Moves:</h3>
-        {pokemonMoves.moves.map((m: { move: { name: string } }, i: number) => (
-          <ul key={i}>
-            <li>{m.move.name}</li>
-          </ul>
-        ))}
+        <h2>Moves:</h2>
+        <div className="grid grid-cols-3 md:grid-cols-6 p-10 bg-lime-300 rounded-2xl">
+          {pokemonMoves.moves.map(
+            (m: { move: { name: string } }, i: number) => (
+              <ul key={i}>
+                <li>{m.move.name}</li>
+              </ul>
+            )
+          )}
+        </div>
       </div>
     </div>
   );

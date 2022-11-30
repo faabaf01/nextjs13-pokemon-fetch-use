@@ -1,4 +1,5 @@
 //https://beta.nextjs.org/docs/data-fetching/fetching
+import Image from "next/legacy/image";
 import Link from "next/link";
 import { use } from "react";
 import { PokemonRes } from "../types/types";
@@ -18,21 +19,25 @@ export default function PokemonPage() {
   // console.log(allPokemons);
 
   return (
-    <div>
+    <div className="mx-10">
       <h1>List of Pokémon</h1>
-      {allPokemons?.results.map((p: { name: string }, i: number) => (
-        <div key={i}>
-          <Link href={`/pokemon/${p.name}`}>
-            {/* <Image
-              width={100}
-              height={100}
-              alt={p.name}
-              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${i}.svg`}
-            /> */}
-            <p>{p.name}</p>
-          </Link>
-        </div>
-      ))}
+      <div className="grid gap-8 grid-cols-2 md:grid-cols-5 p-2">
+        {allPokemons?.results.map((p: { name: string }, i: number) => (
+          <div key={i} className="w-36 p-4 bg-lime-400 rounded-xl">
+            <Link href={`/pokemon/${p.name}`}>
+              <Image
+                width={100}
+                height={100}
+                alt={p.name}
+                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${
+                  i + 1
+                }.svg`}
+              />
+              <p className="uppercase font-bold">{p.name}</p>
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
