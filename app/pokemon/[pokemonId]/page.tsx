@@ -18,12 +18,39 @@ interface PMoves {
 }
 
 const fetchData = async (pokemonId: string) => {
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
+  const POKEMON_DETAIL = `
+  query pokemon( $name: String!) {
+      pokemon(name: $name) {
+        id
+        name
+        sprites {
+          front_default
+        }
+        moves {
+          move {
+            name
+          }
+        }
+        types {
+          type {
+            name
+          }
+        }
+      }
+    }
+  `;
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-  return await res.json();
+  const res = await fetch("https://graphql-pokeapi.graphcdn.app/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: POKEMON_DETAIL,
+      variables: { name: pokemonId },
+    }),
+  });
+
+  const details = await res.json();
+  return details;
 };
 
 // export async function generateStaticParams({ pokemonId }: any) {
@@ -51,7 +78,7 @@ function SpecificPokemon({ params }: PageProps) {
 
   return (
     <div className="space-y-6 py-8 mx-4 text-base leading-7">
-      {/* {JSON.stringify(pokemonMoves)} */}
+      {JSON.stringify(pokemonMoves)}
       <h1 className="capitalize">{pokemonId}</h1>
       <div className="mx-auto h-40 w-40 bg-yellow-100 rounded-full">
         {/* <Image
@@ -64,13 +91,13 @@ function SpecificPokemon({ params }: PageProps) {
       </div>
 
       <h2>Moves:</h2>
-      <div className="grid grid-cols-3 md:grid-cols-6 p-5 bg-green-100 rounded-2xl">
+      {/* <div className="grid grid-cols-3 md:grid-cols-6 p-5 bg-green-100 rounded-2xl">
         {pokemonMoves.moves.map((m: { move: { name: string } }, i: number) => (
           <ul key={i}>
             <li>{m.move.name}</li>
           </ul>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
