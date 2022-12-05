@@ -3,7 +3,6 @@
 //runs at build time, will not be called again during revalidation (ISR)
 import { use } from "react";
 import Image from "next/legacy/image";
-import { getPokemons } from "../page";
 
 // can use async/await in layouts and pages, which are Server Components
 // similar to getStaticPaths
