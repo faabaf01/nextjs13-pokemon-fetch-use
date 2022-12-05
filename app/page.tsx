@@ -1,17 +1,15 @@
+import Image from "next/legacy/image";
+import homeposter from "../public/homeposter.jpg";
+
 //do data fetching in server components, then pass the data as props to client component
 export default function HomePage() {
   return (
     <div className="mx-8 space-y-6 pt-32">
       <div className="text-center bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-blue-500">
         <h1>Home Page</h1>
+        <h2>Welcome</h2>
       </div>
-      <h2>Welcome!</h2>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium
-        aspernatur ad laborum. Qui voluptatum consequuntur tempore iusto, sint
-        totam quas eligendi iste porro possimus. Accusamus obcaecati officia
-        veniam deleniti sed!
-      </p>
+      <Image width={260} height={160} alt={"poster"} src={homeposter} />
       <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 text-center">
         <div className="relative bg-yellow-100 h-70 rounded-3xl shadow-lg py-3">
           <h2>Game List</h2>

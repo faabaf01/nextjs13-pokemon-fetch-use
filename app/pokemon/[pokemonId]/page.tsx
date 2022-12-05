@@ -3,6 +3,7 @@
 //runs at build time, will not be called again during revalidation (ISR)
 import { use } from "react";
 import Image from "next/legacy/image";
+import { getPokemons } from "../page";
 
 // can use async/await in layouts and pages, which are Server Components
 // similar to getStaticPaths
@@ -13,8 +14,21 @@ interface PageProps {
   };
 }
 
+interface Moves {
+  move: { name: string };
+}
+
 interface PMoves {
-  moves: [{ move: { name: string } }];
+  data: {
+    pokemon: {
+      id: number;
+      name: string;
+      sprites: {
+        front_default: string;
+      };
+      moves: Moves[];
+    };
+  };
 }
 
 const fetchData = async (pokemonId: string) => {
@@ -28,11 +42,6 @@ const fetchData = async (pokemonId: string) => {
         }
         moves {
           move {
-            name
-          }
-        }
-        types {
-          type {
             name
           }
         }
@@ -54,19 +63,26 @@ const fetchData = async (pokemonId: string) => {
 };
 
 // export async function generateStaticParams({ pokemonId }: any) {
-//   const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
-//   const data = await res.json();
+//   const data = await getPokemons();
+//   // console.log(data);
 
-//   const ids = data.moves.move.map((m))
-//   return [
-//     { pokemonId: "bulbasaur" },
-//     { pokemonId: "ivysaur" },
-//     { pokemonId: "venusaur" },
-//   ];
+//   // const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
+//   // const data = await res.json();
+
+//   // const ids = data.moves.move.map((m))
+//   // return [
+//   //   { pokemonId: "bulbasaur" },
+//   //   { pokemonId: "ivysaur" },
+//   //   { pokemonId: "venusaur" },
+//   // ];
+//   return data?.pokemons?.results?.map((p: { name: string }) => ({
+//     pokemonId: p.name,
+//   }));
 // }
+
 // export async function generateStaticParams(pokemonId: string) {
 //   const pokemons = await fetchData(pokemonId);
-//   const result = pokemons.map((m: { move: { name: string } }) => ({
+//   const result = pokemons.map((m: Moves) => ({
 //     pokemonId: m.move.name.toString(),
 //   }));
 //   return result;
@@ -78,26 +94,25 @@ function SpecificPokemon({ params }: PageProps) {
 
   return (
     <div className="space-y-6 py-8 mx-4 text-base leading-7">
-      {JSON.stringify(pokemonMoves)}
       <h1 className="capitalize">{pokemonId}</h1>
-      <div className="mx-auto h-40 w-40 bg-yellow-100 rounded-full">
-        {/* <Image
+      <div className="mx-auto w-56 h-40 bg-yellow-100 rounded-full">
+        <Image
           priority
-          height={160}
-          width={180}
+          height={250}
+          width={260}
           alt={pokemonId}
-          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonId}.svg`}
-        /> */}
+          src={pokemonMoves.data.pokemon.sprites.front_default}
+        />
       </div>
 
       <h2>Moves:</h2>
-      {/* <div className="grid grid-cols-3 md:grid-cols-6 p-5 bg-green-100 rounded-2xl">
-        {pokemonMoves.moves.map((m: { move: { name: string } }, i: number) => (
+      <div className="grid grid-cols-3 md:grid-cols-6 p-5 bg-green-100 rounded-2xl">
+        {pokemonMoves.data.pokemon.moves.map((m: Moves, i: number) => (
           <ul key={i}>
             <li>{m.move.name}</li>
           </ul>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 }

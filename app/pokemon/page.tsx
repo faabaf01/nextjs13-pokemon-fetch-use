@@ -7,7 +7,7 @@ import { PokemonRes } from "../types/types";
 
 //fetch is currently not supported in Client Components, may trigger multiple re-renders
 // cache: 'force-cache' is the default,to fetch fresh data on every fetch request, use the cache: 'no-store' option
-async function getPokemons() {
+export async function getPokemons() {
   const gqlQuery = `query pokemons($limit: Int, $offset: Int) {
     pokemons(limit: $limit, offset: $offset) {
       count
