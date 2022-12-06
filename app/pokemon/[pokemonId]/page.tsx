@@ -3,15 +3,19 @@
 //runs at build time, will not be called again during revalidation (ISR)
 import { use } from "react";
 import Image from "next/legacy/image";
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 // can use async/await in layouts and pages, which are Server Components
 // similar to getStaticPaths
 
-interface PageProps {
-  params: {
-    pokemonId: string;
-  };
-}
+type PageParams = {
+  pokemonId: string;
+};
+
+type PageProps = {
+  params: PageParams;
+  searchParams?: { currentPage: number };
+};
 
 interface Moves {
   move: { name: string };
@@ -58,34 +62,33 @@ const fetchData = async (pokemonId: string) => {
   });
 
   const details = await res.json();
+  console.log(details);
   return details;
 };
 
-// export async function generateStaticParams({ pokemonId }: any) {
-//   const data = await getPokemons();
-//   // console.log(data);
+export const generateStaticParams = async (): Promise<PageParams[]> => {
+  // const { pokemonId } = params;
+  // console.log(pokemonId);
+  const res: PMoves = await fetchData("ivysaur");
+  // // console.log(res);
+  // // const result = await res.json();
+  // // console.log(res);
+  return [
+    {
+      pokemonId: res.data.pokemon.name,
+    },
+  ];
 
-//   // const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
-//   // const data = await res.json();
-
-//   // const ids = data.moves.move.map((m))
-//   // return [
-//   //   { pokemonId: "bulbasaur" },
-//   //   { pokemonId: "ivysaur" },
-//   //   { pokemonId: "venusaur" },
-//   // ];
-//   return data?.pokemons?.results?.map((p: { name: string }) => ({
-//     pokemonId: p.name,
-//   }));
-// }
-
-// export async function generateStaticParams(pokemonId: string) {
-//   const pokemons = await fetchData(pokemonId);
-//   const result = pokemons.map((m: Moves) => ({
-//     pokemonId: m.move.name.toString(),
-//   }));
-//   return result;
-// }
+  // res.data.pokemon.name.((p: { pokemonId: string }) => ({
+  //   pokemonId: p.pokemonId,
+  // }));
+  //   return [
+  //   { pokemonId: "bulbasaur" },
+  //   { pokemonId: "ivysaur" },
+  //   { pokemonId: "venusaur" },
+  // ];
+  // return result;
+};
 
 function SpecificPokemon({ params }: PageProps) {
   const { pokemonId } = params;

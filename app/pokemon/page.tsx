@@ -19,7 +19,7 @@ async function getPokemons() {
   }`;
 
   const gqlVariables = {
-    limit: 14,
+    limit: 18,
     offset: 0,
   };
 
@@ -40,7 +40,7 @@ async function getPokemons() {
 //use is a new React function, accepts a promise, conceptually similar to await
 export default function PokemonPage() {
   const allPokemons = use(getPokemons());
-  console.log(allPokemons);
+  // console.log(allPokemons);
 
   return (
     <div className="space-y-6 pt-2 mx-6">
