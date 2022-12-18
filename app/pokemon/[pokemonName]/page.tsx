@@ -3,13 +3,12 @@
 //runs at build time, will not be called again during revalidation (ISR)
 import { use } from "react";
 import Image from "next/legacy/image";
-import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 // can use async/await in layouts and pages, which are Server Components
 // similar to getStaticPaths
 
 type PageParams = {
-  pokemonId: string;
+  pokemonName: string;
 };
 
 type PageProps = {
@@ -21,7 +20,7 @@ interface Moves {
   move: { name: string };
 }
 
-interface PMoves {
+interface IPokemonData {
   data: {
     pokemon: {
       id: number;
@@ -33,10 +32,23 @@ interface PMoves {
     };
   };
 }
+// interface getPokemonsTS {
+//   data: {
+//     pokemons: {
+//       count: number;
+//       results: [
+//         {
+//           id: number;
+//           name: string;
+//         }
+//       ];
+//     };
+//   };
+// }
 
-const fetchData = async (pokemonId: string) => {
+const fetchData = async (pokemonName: string) => {
   const POKEMON_DETAIL = `
-  query pokemon( $name: String!) {
+  query pokemon($name: String!) {
       pokemon(name: $name) {
         id
         name
@@ -57,59 +69,57 @@ const fetchData = async (pokemonId: string) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       query: POKEMON_DETAIL,
-      variables: { name: pokemonId },
+      variables: { name: pokemonName },
     }),
   });
 
   const details = await res.json();
-  console.log(details);
   return details;
 };
 
 export const generateStaticParams = async (): Promise<PageParams[]> => {
-  // const { pokemonId } = params;
-  // console.log(pokemonId);
-  const res: PMoves = await fetchData("ivysaur");
-  // // console.log(res);
-  // // const result = await res.json();
-  // // console.log(res);
+  const res: IPokemonData = await fetchData("charmander");
+  // console.log(res);
+
   return [
     {
-      pokemonId: res.data.pokemon.name,
+      pokemonName: res?.data.pokemon.name,
     },
   ];
 
-  // res.data.pokemon.name.((p: { pokemonId: string }) => ({
-  //   pokemonId: p.pokemonId,
+  // res.data.pokemon.name.((p: { pokemonName: string }) => ({
+  //   pokemonName: p.pokemonName,
   // }));
   //   return [
-  //   { pokemonId: "bulbasaur" },
-  //   { pokemonId: "ivysaur" },
-  //   { pokemonId: "venusaur" },
+  //   { pokemonName: "bulbasaur" },
+  //   { pokemonName: "ivysaur" },
+  //   { pokemonName: "venusaur" },
   // ];
   // return result;
 };
 
-function SpecificPokemon({ params }: PageProps) {
-  const { pokemonId } = params;
-  const pokemonMoves: PMoves = use(fetchData(pokemonId));
+export default function SpecificPokemon({ params }: PageProps) {
+  const { pokemonName } = params;
+  const pokemonData: IPokemonData = use(fetchData(pokemonName));
 
   return (
     <div className="space-y-6 py-8 mx-4 text-base leading-7">
-      <h1 className="capitalize">{pokemonId}</h1>
-      <div className="mx-auto w-56 h-40 bg-yellow-100 rounded-full">
+      <h1 className="py-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-blue-500 capitalize">
+        {pokemonName}
+      </h1>
+      <div className="mx-auto w-56 h-56 bg-green-100 rounded-full">
         <Image
           priority
           height={250}
           width={260}
-          alt={pokemonId}
-          src={pokemonMoves.data.pokemon.sprites.front_default}
+          alt={`${pokemonName}`}
+          src={`${pokemonData.data.pokemon.sprites.front_default}`}
         />
       </div>
 
-      <h2>Moves:</h2>
-      <div className="grid grid-cols-3 md:grid-cols-6 p-5 bg-green-100 rounded-2xl">
-        {pokemonMoves.data.pokemon.moves.map((m: Moves, i: number) => (
+      <h2>Moves</h2>
+      <div className="grid grid-cols-3 md:grid-cols-6 p-5 bg-yellow-100 rounded-2xl">
+        {pokemonData.data.pokemon.moves.map((m: Moves, i: number) => (
           <ul key={i}>
             <li>{m.move.name}</li>
           </ul>
@@ -118,5 +128,3 @@ function SpecificPokemon({ params }: PageProps) {
     </div>
   );
 }
-
-export default SpecificPokemon;

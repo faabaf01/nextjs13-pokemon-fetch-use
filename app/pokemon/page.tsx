@@ -2,8 +2,6 @@
 import Image from "next/legacy/image";
 import Link from "next/link";
 import { use } from "react";
-import { PokemonRes } from "../types/types";
-// import Image from "next/image";
 
 //fetch is currently not supported in Client Components, may trigger multiple re-renders
 // cache: 'force-cache' is the default,to fetch fresh data on every fetch request, use the cache: 'no-store' option
@@ -12,6 +10,7 @@ async function getPokemons() {
     pokemons(limit: $limit, offset: $offset) {
       count
       results {
+        id
         name
         image
       }
@@ -38,7 +37,7 @@ async function getPokemons() {
 }
 
 //use is a new React function, accepts a promise, conceptually similar to await
-export default function PokemonPage() {
+export default function AllPokemons() {
   const allPokemons = use(getPokemons());
   // console.log(allPokemons);
 
