@@ -42,7 +42,7 @@ export default function AllPokemons() {
   // console.log(allPokemons);
 
   return (
-    <div className="space-y-6 pt-2 mx-6">
+    <div id="pokemon" className="space-y-6 pt-2">
       <div className="text-center bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-blue-500">
         <h1>List of Pokémon</h1>
       </div>
@@ -51,7 +51,7 @@ export default function AllPokemons() {
         {allPokemons?.data?.pokemons?.results.map(
           (p: { name: string; image: string }, i: number) => (
             <Link key={i} href={`/pokemon/${p.name}`}>
-              <div className="w-36 h-36 bg-yellow-100 shadow-lg rounded-3xl hover:bg-green-200">
+              <div className="w-auto h-auto bg-yellow-100 shadow-lg rounded-3xl hover:bg-green-200">
                 <Image width={100} height={100} alt={p.name} src={p.image} />
                 <p className="uppercase font-bold">{p.name}</p>
               </div>

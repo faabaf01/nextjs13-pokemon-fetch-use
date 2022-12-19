@@ -23,7 +23,7 @@ export default function HomePage() {
       </div> */}
 
       <div className="pb-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 text-center">
-        <div className="relative bg-green-100 h-70 rounded-3xl shadow-lg py-3">
+        <div className="bg-green-100 h-70 rounded-3xl shadow-lg py-3">
           <h2>Game List</h2>
           <p className="mb-2">ゲームソフト一覧</p>
         </div>
