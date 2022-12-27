@@ -32,13 +32,14 @@ async function getPokemons() {
     method: "POST",
   });
 
-  const pokes = await data.json();
-  return pokes;
+  return data.json();
 }
+
+const dataPromise = getPokemons();
 
 //use is a new React function, accepts a promise, conceptually similar to await
 export default function AllPokemons() {
-  const allPokemons = use(getPokemons());
+  const allPokemons = use(dataPromise);
   // console.log(allPokemons);
 
   return (

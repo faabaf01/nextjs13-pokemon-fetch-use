@@ -77,6 +77,7 @@ const fetchData = async (pokemonName: string) => {
   return details;
 };
 
+//generateStaticParams doesn't require any context parameters
 export const generateStaticParams = async (): Promise<PageParams[]> => {
   const res: IPokemonData = await fetchData("charmander");
   // console.log(res);
@@ -112,8 +113,8 @@ export default function SpecificPokemon({ params }: PageProps) {
           priority
           height={250}
           width={260}
-          alt={`${pokemonName}`}
-          src={`${pokemonData.data.pokemon.sprites.front_default}`}
+          alt={pokemonName}
+          src={pokemonData.data.pokemon.sprites.front_default}
         />
       </div>
 

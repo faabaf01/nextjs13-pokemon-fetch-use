@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import pokemonLogo from "../../public/pokemonLogo.png";
 import { useState } from "react";
