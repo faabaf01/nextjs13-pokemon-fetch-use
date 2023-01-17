@@ -6,8 +6,8 @@ export default function HomePage() {
     <div className="mx-8 space-y-6 pt-32">
       <div className="text-center">
         <p className="font-light text-xl">
-          Do you love pokemon? And do you want to know more about your favourite
-          Pokemon?
+          Do you love Pokémons? And do you want to know more about your
+          favourite Pokémons?
         </p>
         <p className="font-light text-xl">
           Then you&apos;re at the right place!
@@ -15,7 +15,7 @@ export default function HomePage() {
       </div>
 
       <h1 className=" py-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-blue-500">
-        Welcome to the Pokémon App
+        Welcome to PikaPika Pokémon
       </h1>
 
       {/* <div className="px-auto">

@@ -18,7 +18,7 @@ async function getPokemons() {
   }`;
 
   const gqlVariables = {
-    limit: 18,
+    limit: 24,
     offset: 0,
   };
 

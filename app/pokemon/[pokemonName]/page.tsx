@@ -77,9 +77,10 @@ const fetchData = async (pokemonName: string) => {
   return details;
 };
 
+
 //generateStaticParams doesn't require any context parameters
 export const generateStaticParams = async (): Promise<PageParams[]> => {
-  const res: IPokemonData = await fetchData("charmander");
+  const res: IPokemonData = await fetchData("bulbasaur");
   // console.log(res);
 
   return [
@@ -88,7 +89,7 @@ export const generateStaticParams = async (): Promise<PageParams[]> => {
     },
   ];
 
-  // res.data.pokemon.name.((p: { pokemonName: string }) => ({
+  // return res.data.pokemon.name((p: { pokemonName: string }) => ({
   //   pokemonName: p.pokemonName,
   // }));
   //   return [
