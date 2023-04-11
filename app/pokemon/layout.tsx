@@ -6,7 +6,9 @@ export default function PokemonLayout({
   return (
     <div className="text-center">
       <p className="space-y-6 pt-32 mx-8 font-light text-xl">
-        Bringing the world together through Pokémons that you love!
+        With our love for Pokémons, we strive to bring the world together by
+        bridging the gap between different cultures and unite in the fun of
+        adventure, exploration, and the joy of catching `em all!
       </p>
       {children}
     </div>

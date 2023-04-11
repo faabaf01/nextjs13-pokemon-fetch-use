@@ -1,4 +1,5 @@
 import Image from "next/legacy/image";
+import InfoBox from "./components/InfoBox";
 
 //do data fetching in server components, then pass the data as props to client component
 export default function HomePage() {
@@ -10,12 +11,12 @@ export default function HomePage() {
           favourite Pokémons?
         </p>
         <p className="font-light text-xl">
-          Then you&apos;re at the right place!
+          Then you&apos;re at the right place!✨
         </p>
       </div>
 
       <h1 className=" py-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-blue-500">
-        Welcome to PikaPika Pokémon
+        Welcome to Pokémons
       </h1>
 
       {/* <div className="px-auto">
@@ -23,18 +24,15 @@ export default function HomePage() {
       </div> */}
 
       <div className="pb-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 text-center">
-        <div className="bg-green-100 h-70 rounded-3xl shadow-lg py-3">
-          <h2>Game List</h2>
-          <p className="mb-2">ゲームソフト一覧</p>
-        </div>
+        <InfoBox />
 
         <div className="bg-cyan-100 h-80 rounded-3xl shadow-lg py-3">
           <h2>News</h2>
-          <p className="mb-2">ゲームの最新情報</p>
+          <p className="mb-2">Latest Gaming News</p>
           <p className="px-3">
-            Log in during this special event to obtain backgrounds, frames,
-            stickers, and Trainer fashion items inspired by the Pokémon Scarlet
-            and Pokémon Violet games.
+            To get backgrounds, frames, stickers, and Trainer fashion items that
+            draw inspiration from the Pokémon Scarlet and Pokémon Violet games,
+            make sure to log in during this exclusive event.
           </p>
           <div className="px-6 pt-4 pb-2 text-center mt-auto">
             <a
@@ -48,7 +46,7 @@ export default function HomePage() {
 
         <div className="bg-blue-100 h-80 rounded-3xl shadow-lg py-3">
           <h2>Shop List</h2>
-          <p className="mb-2">オフィシャルショップ一覧</p>
+          <p className="mb-2">Shops Directory</p>
           <ul className="px-3">
             <li>Lavender Town</li>
             <li>Vermilion</li>
